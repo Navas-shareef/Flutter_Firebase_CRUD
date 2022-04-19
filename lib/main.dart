@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crud/models/users_model.dart';
 import 'package:flutter/material.dart';
 
 Future main() async {
@@ -56,8 +57,8 @@ class _HomePageState extends State<HomePage> {
 
 Future CreateUser({required String name}) async {
   // Reference to Document
-  final docUser = FirebaseFirestore.instance.collection('users').doc('my-id');
-  final jsom = {'name': name, 'age': 22, 'birthday': DateTime(2001, 2, 18)};
+  final docUser = FirebaseFirestore.instance.collection('users').doc();
+  final user = User(name: name, age: 21, birthday: DateTime(2003, 4, 25));
 // Create document and write data to Firebase
-  await docUser.set(jsom);
+  await docUser.set(user.toJson());
 }
