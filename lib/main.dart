@@ -33,32 +33,72 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = TextEditingController();
+  final controllerName = TextEditingController();
+  final controllerAge = TextEditingController();
+  final controllerDate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          controller: controller,
+        title: const Text('Add User'),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: <Widget>[
+            TextField(
+              controller: controllerName,
+              decoration: const InputDecoration(
+                  labelText: 'Name',
+                  contentPadding: const EdgeInsets.only(bottom: 0)),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextField(
+              controller: controllerAge,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Age',
+                contentPadding: EdgeInsets.only(bottom: 0),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextField(
+              controller: controllerDate,
+              decoration: const InputDecoration(
+                  labelText: 'DOB',
+                  contentPadding: const EdgeInsets.only(bottom: 0)),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  final user = User(
+                      name: controllerName.text,
+                      age: int.parse(controllerAge.text),
+                      birthday: controllerDate.text);
+                  CreateUser(user: user);
+                },
+                child: const Text('Create'))
+          ],
         ),
-        backgroundColor: Colors.blueGrey,
-        actions: [
-          IconButton(
-              onPressed: () {
-                CreateUser(name: controller.text);
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
     );
   }
 }
 
-Future CreateUser({required String name}) async {
+Future CreateUser({required User user}) async {
   // Reference to Document
   final docUser = FirebaseFirestore.instance.collection('users').doc();
-  final user = User(name: name, age: 21, birthday: DateTime(2003, 4, 25));
+
+  user.id = docUser.id;
+
 // Create document and write data to Firebase
   await docUser.set(user.toJson());
 }

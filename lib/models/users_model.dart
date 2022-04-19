@@ -2,7 +2,7 @@ class User {
   String id;
   final String name;
   final int age;
-  final DateTime birthday;
+  final String birthday;
 
   User(
       {this.id = '',
