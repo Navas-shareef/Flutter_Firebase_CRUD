@@ -1,8 +1,8 @@
 class User {
   String id;
-  final String name;
-  final int age;
-  final String birthday;
+  String name;
+  int age;
+  String birthday;
 
   User(
       {this.id = '',

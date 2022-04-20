@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/update_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'models/snackbar.dart';
 import 'models/users_model.dart';
+import 'snackbar.dart';
 
 class AllUsers extends StatelessWidget {
   const AllUsers({Key? key}) : super(key: key);

@@ -4,7 +4,7 @@ import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/models/users_model.dart';
 import 'package:flutter/material.dart';
 
-import 'models/snackbar.dart';
+import 'snackbar.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +35,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+final formKey = GlobalKey<FormState>();
+
 class _HomePageState extends State<HomePage> {
   final controllerName = TextEditingController();
   final controllerAge = TextEditingController();
@@ -47,51 +49,68 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Add User'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: <Widget>[
-            TextField(
-              controller: controllerName,
-              decoration: const InputDecoration(
-                  labelText: 'Name',
-                  contentPadding: const EdgeInsets.only(bottom: 0)),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: controllerAge,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Age',
-                contentPadding: EdgeInsets.only(bottom: 0),
+      body: Form(
+        key: formKey,
+        child: Center(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: <Widget>[
+              TextFormField(
+                validator: (value) =>
+                    value != null && value.isEmpty ? 'Enter name' : null,
+                controller: controllerName,
+                decoration: const InputDecoration(
+                    labelText: 'Name',
+                    contentPadding: const EdgeInsets.only(bottom: 0)),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: controllerDate,
-              decoration: const InputDecoration(
-                  labelText: 'DOB',
-                  contentPadding: const EdgeInsets.only(bottom: 0)),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  final user = User(
-                      name: controllerName.text,
-                      age: int.parse(controllerAge.text),
-                      birthday: controllerDate.text);
-                  CreateUser(user: user);
-                  Navigator.pop(context);
-                  final snackbar = displaySnackbar(context, 'Created New User');
-                },
-                child: const Text('Create'))
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                validator: (value) =>
+                    value != null && value.isEmpty ? 'Enter Age' : null,
+                controller: controllerAge,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Age',
+                  contentPadding: EdgeInsets.only(bottom: 0),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                validator: (value) => value != null && value.isEmpty
+                    ? 'Enter date of birth'
+                    : null,
+                controller: controllerDate,
+                decoration: const InputDecoration(
+                    labelText: 'DOB',
+                    contentPadding: const EdgeInsets.only(bottom: 0)),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    final form = formKey.currentState!;
+                    if (form.validate()) {
+                      final user = User(
+                          name: controllerName.text,
+                          age: int.parse(controllerAge.text),
+                          birthday: controllerDate.text);
+                      CreateUser(user: user);
+                      Navigator.pop(context);
+                      final snackbar =
+                          displaySnackbar(context, 'Created New User');
+                    } else {
+                      final snackbar = displaySnackbar(
+                          context, 'Form is not Valid,pls fill details');
+                    }
+                  },
+                  child: const Text('Create'))
+            ],
+          ),
         ),
       ),
     );
