@@ -78,6 +78,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
   }
 }
 
+// function to update item
 Future<void> updateItem(String userid, String name, int age, String dob) async {
   final docUser = FirebaseFirestore.instance.collection('users').doc(userid);
   await docUser.update({'name': name, 'age': age, 'birthday': dob});

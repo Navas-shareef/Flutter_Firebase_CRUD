@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crud/allusers.dart';
+import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/models/users_model.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AllUsers(),
+      home: const MainScreen(),
     );
   }
 }
@@ -85,6 +85,7 @@ class _HomePageState extends State<HomePage> {
                       age: int.parse(controllerAge.text),
                       birthday: controllerDate.text);
                   CreateUser(user: user);
+                  Navigator.pop(context);
                 },
                 child: const Text('Create'))
           ],
