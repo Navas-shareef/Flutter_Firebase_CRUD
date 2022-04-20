@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/models/users_model.dart';
+import 'package:firebase_crud/splash_scrren.dart';
 import 'package:flutter/material.dart';
 
 import 'snackbar.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainScreen(),
+      home: const SplashScreen(),
     );
   }
 }
