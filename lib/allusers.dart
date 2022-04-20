@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crud/update_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'models/users_model.dart';
@@ -38,9 +39,11 @@ class AllUsers extends StatelessWidget {
             return const Center(child: Text('Something Went Wrong '));
           } else if (snapshot.hasData) {
             final users = snapshot.data;
-            return ListView(
-              children: users!.map(buildUser).toList(),
-            );
+            return ListView.builder(
+                itemCount: users?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return buildUser(context, users![index]);
+                });
           } else {
             return const Center(
               child: CircularProgressIndicator(
@@ -54,12 +57,23 @@ class AllUsers extends StatelessWidget {
   }
 }
 
-Widget buildUser(User user) => ListTile(
+Widget buildUser(BuildContext context, User user) => ListTile(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UpdateItemScreen(user: user)));
+      },
       leading: CircleAvatar(
         child: Text('${user.age}'),
       ),
       title: Text(user.name),
       subtitle: Text(user.birthday),
+      trailing: IconButton(
+          onPressed: () {
+            deleteItem(user.id);
+          },
+          icon: const Icon(Icons.delete)),
     );
 
 // read users
@@ -78,4 +92,10 @@ Future<User?> readUser() async {
   if (snapshot.exists) {
     return User.fromJson(snapshot.data()!);
   }
+}
+
+// function to delete firebase data
+Future<void> deleteItem(String id) async {
+  final docUser = FirebaseFirestore.instance.collection('users').doc(id);
+  await docUser.delete();
 }
