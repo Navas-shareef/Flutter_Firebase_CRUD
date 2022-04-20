@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'models/users_model.dart';
@@ -10,46 +11,74 @@ class UpdateItemScreen extends StatefulWidget {
   State<UpdateItemScreen> createState() => _UpdateItemScreenState();
 }
 
+final controllerName = TextEditingController();
+final controllerAge = TextEditingController();
+final controllerDate = TextEditingController();
+
 class _UpdateItemScreenState extends State<UpdateItemScreen> {
+  @override
+  void initState() {
+    controllerName.text = widget.user.name;
+    controllerAge.text = widget.user.age.toString();
+    controllerDate.text = widget.user.birthday;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Users'),
+        title: const Text('Update User'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Center(
-        child: Text('hi'),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: <Widget>[
+            TextField(
+              controller: controllerName,
+              decoration: const InputDecoration(
+                  labelText: 'Name',
+                  contentPadding: const EdgeInsets.only(bottom: 0)),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextField(
+              controller: controllerAge,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Age',
+                contentPadding: EdgeInsets.only(bottom: 0),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextField(
+              controller: controllerDate,
+              decoration: const InputDecoration(
+                  labelText: 'DOB',
+                  contentPadding: const EdgeInsets.only(bottom: 0)),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  updateItem(widget.user.id, controllerName.text,
+                          int.parse(controllerAge.text), controllerDate.text)
+                      .then((value) => Navigator.pop(context));
+                },
+                child: const Text('Create'))
+          ],
+        ),
       ),
-
-      // body: StreamBuilder<List<User>>(
-      //   stream: readUsers(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasError) {
-      //       return const Center(child: Text('Something Went Wrong '));
-      //     } else if (snapshot.hasData) {
-      //       final users = snapshot.data;
-      //       return ListView(
-      //         children: users!.map(buildUser).toList(),
-      //       );
-      //     } else {
-      //       return const Center(
-      //         child: CircularProgressIndicator(
-      //           strokeWidth: 2,
-      //         ),
-      //       );
-      //     }
-      //   },
-      // ),
     );
   }
 }
 
-Widget buildUser(User user) => ListTile(
-      leading: CircleAvatar(
-        child: Text('${user.age}'),
-      ),
-      title: Text(user.name),
-      subtitle: Text(user.birthday),
-      trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
-    );
+Future<void> updateItem(String userid, String name, int age, String dob) async {
+  final docUser = FirebaseFirestore.instance.collection('users').doc(userid);
+  await docUser.update({'name': name, 'age': age, 'birthday': dob});
+}
