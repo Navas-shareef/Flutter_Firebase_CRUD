@@ -75,7 +75,10 @@ Widget buildUser(BuildContext context, User user) => ListTile(
             deleteItem(user.id);
             final snackbar = displaySnackbar(context, 'Successfully Deleted');
           },
-          icon: const Icon(Icons.delete)),
+          icon: const Icon(
+            Icons.delete,
+            color: Colors.redAccent,
+          )),
     );
 
 // read users
