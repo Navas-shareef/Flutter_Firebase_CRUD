@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crud/allusers.dart';
 import 'package:firebase_crud/models/users_model.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const AllUsers(),
     );
   }
 }
@@ -93,6 +94,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+// create user
 Future CreateUser({required User user}) async {
   // Reference to Document
   final docUser = FirebaseFirestore.instance.collection('users').doc();
