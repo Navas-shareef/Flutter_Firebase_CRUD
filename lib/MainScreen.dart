@@ -1,6 +1,7 @@
 import 'package:firebase_crud/allusers.dart';
-import 'package:firebase_crud/main.dart';
 import 'package:flutter/material.dart';
+
+import 'main.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);

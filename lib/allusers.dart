@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/update_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'models/snackbar.dart';
 import 'models/users_model.dart';
 
 class AllUsers extends StatelessWidget {
@@ -72,6 +73,7 @@ Widget buildUser(BuildContext context, User user) => ListTile(
       trailing: IconButton(
           onPressed: () {
             deleteItem(user.id);
+            final snackbar = displaySnackbar(context, 'Successfully Deleted');
           },
           icon: const Icon(Icons.delete)),
     );

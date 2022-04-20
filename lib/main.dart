@@ -4,6 +4,8 @@ import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/models/users_model.dart';
 import 'package:flutter/material.dart';
 
+import 'models/snackbar.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -86,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                       birthday: controllerDate.text);
                   CreateUser(user: user);
                   Navigator.pop(context);
+                  final snackbar = displaySnackbar(context, 'Created New User');
                 },
                 child: const Text('Create'))
           ],

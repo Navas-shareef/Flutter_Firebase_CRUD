@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'models/snackbar.dart';
 import 'models/users_model.dart';
 
 class UpdateItemScreen extends StatefulWidget {
@@ -69,8 +70,10 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                   updateItem(widget.user.id, controllerName.text,
                           int.parse(controllerAge.text), controllerDate.text)
                       .then((value) => Navigator.pop(context));
+                  final snackbar =
+                      displaySnackbar(context, 'Successfully Updated');
                 },
-                child: const Text('Create'))
+                child: const Text('Update'))
           ],
         ),
       ),
