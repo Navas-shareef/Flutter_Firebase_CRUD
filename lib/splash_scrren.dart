@@ -1,4 +1,4 @@
-import 'package:firebase_crud/MainScreen.dart';
+import 'package:firebase_crud/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _changeScreen() async {
     await Future.delayed(const Duration(milliseconds: 4000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MainScreen()));
+        context, MaterialPageRoute(builder: (context) => SignUpScreen()));
   }
 
   @override
