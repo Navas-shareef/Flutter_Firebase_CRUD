@@ -1,5 +1,6 @@
 import 'package:firebase_crud/allusers.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 
@@ -23,11 +24,14 @@ class MainScreen extends StatelessWidget {
                 },
                 child: const Text('Create User')),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  final userKey = await getUserId();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AllUsers()));
+                          builder: (context) => AllUsers(
+                                userKey: userKey.toString(),
+                              )));
                 },
                 child: const Text('View All Users')),
           ],
@@ -35,4 +39,12 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<String> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  final userID = prefs.getString('currentuserid');
+
+  return userID.toString();
 }

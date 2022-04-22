@@ -3,12 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crud/models/users_model.dart';
 import 'package:firebase_crud/splash_scrren.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'snackbar.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -119,11 +122,14 @@ class _HomePageState extends State<HomePage> {
 
 // create user
 Future CreateUser({required User user}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   // Reference to Document
   final docUser = FirebaseFirestore.instance.collection('users').doc();
 
   user.id = docUser.id;
-
+  final UID = prefs.getString('currentuserid');
+  user.userId = UID.toString();
+  print(user.userId);
 // Create document and write data to Firebase
   await docUser.set(user.toJson());
 }

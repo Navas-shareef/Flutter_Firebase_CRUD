@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -71,6 +72,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future<void> loginUser(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     String mes = '';
 
@@ -79,6 +81,7 @@ class LoginScreen extends StatelessWidget {
           passwordController.text.isNotEmpty) {
         UserCredential userdata = await _auth.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
+        prefs.setString('currentuserid', userdata.user!.uid);
         mes = 'Successfully login process completed';
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainScreen()));

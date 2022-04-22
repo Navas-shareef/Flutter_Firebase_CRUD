@@ -5,8 +5,34 @@ import 'package:flutter/material.dart';
 import 'models/users_model.dart';
 import 'snackbar.dart';
 
-class AllUsers extends StatelessWidget {
-  const AllUsers({Key? key}) : super(key: key);
+class AllUsers extends StatefulWidget {
+  AllUsers({Key? key, required this.userKey}) : super(key: key);
+  String userKey;
+
+  @override
+  State<AllUsers> createState() => _AllUsersState();
+}
+
+class _AllUsersState extends State<AllUsers> {
+  @override
+  void initState() {
+    print(widget.userKey + 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    super.initState();
+  }
+
+// read users
+  Stream<List<User>> readUsers() {
+    // return FirebaseFirestore.instance.collection('users').snapshots().map(
+    //     (snapshot) =>
+    //         snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .where('userId', isEqualTo: widget.userKey)
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +74,7 @@ class AllUsers extends StatelessWidget {
           } else {
             return const Center(
               child: CircularProgressIndicator(
-                strokeWidth: 2,
+                strokeWidth: 6,
               ),
             );
           }
@@ -80,13 +106,6 @@ Widget buildUser(BuildContext context, User user) => ListTile(
             color: Colors.redAccent,
           )),
     );
-
-// read users
-Stream<List<User>> readUsers() {
-  return FirebaseFirestore.instance.collection('users').snapshots().map(
-      (snapshot) =>
-          snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
-}
 
 // get single item
 Future<User?> readUser() async {

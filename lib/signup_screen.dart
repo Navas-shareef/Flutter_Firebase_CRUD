@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_screen.dart';
 
@@ -110,15 +111,17 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Future<void> signUpUser(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     String mes = 'error occurred';
 
     try {
       if (emailController.text.isNotEmpty ||
           passwordController.text.isNotEmpty) {
-        await _auth.createUserWithEmailAndPassword(
+        UserCredential userdata = await _auth.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
-
+        print(userdata.user!.uid);
+        prefs.setString('currentuserid', userdata.user!.uid);
         mes = 'success';
       } else {
         mes = 'pls enter email and password';
