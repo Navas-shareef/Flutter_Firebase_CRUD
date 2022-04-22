@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add User'),
+        title: const Text('Add Your Favorite Player'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Form(
@@ -71,11 +71,11 @@ class _HomePageState extends State<HomePage> {
               ),
               TextFormField(
                 validator: (value) =>
-                    value != null && value.isEmpty ? 'Enter Age' : null,
+                    value != null && value.isEmpty ? 'Enter Jersey No' : null,
                 controller: controllerAge,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Age',
+                  labelText: 'No',
                   contentPadding: EdgeInsets.only(bottom: 0),
                 ),
               ),
@@ -83,12 +83,11 @@ class _HomePageState extends State<HomePage> {
                 height: 15,
               ),
               TextFormField(
-                validator: (value) => value != null && value.isEmpty
-                    ? 'Enter date of birth'
-                    : null,
+                validator: (value) =>
+                    value != null && value.isEmpty ? 'Enter Position' : null,
                 controller: controllerDate,
                 decoration: const InputDecoration(
-                    labelText: 'DOB',
+                    labelText: 'position',
                     contentPadding: const EdgeInsets.only(bottom: 0)),
               ),
               const SizedBox(
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                       CreateUser(user: user);
                       Navigator.pop(context);
                       final snackbar =
-                          displaySnackbar(context, 'Created New User');
+                          displaySnackbar(context, 'Created New Player');
                     } else {
                       final snackbar = displaySnackbar(
                           context, 'Form is not Valid,pls fill details');

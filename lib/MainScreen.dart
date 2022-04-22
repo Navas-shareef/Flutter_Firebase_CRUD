@@ -22,7 +22,7 @@ class MainScreen extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => const HomePage()));
                 },
-                child: const Text('Create User')),
+                child: const Text('Create Your Dream 11')),
             ElevatedButton(
                 onPressed: () async {
                   final userKey = await getUserId();
@@ -33,7 +33,7 @@ class MainScreen extends StatelessWidget {
                                 userKey: userKey.toString(),
                               )));
                 },
-                child: const Text('View All Users')),
+                child: const Text('View Your Team')),
           ],
         ),
       ),

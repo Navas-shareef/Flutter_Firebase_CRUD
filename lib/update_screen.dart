@@ -31,7 +31,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update User'),
+        title: const Text('Update Player Details'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Form(
@@ -53,11 +53,11 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
               ),
               TextFormField(
                 validator: (value) =>
-                    value != null && value.isEmpty ? 'Enter age' : null,
+                    value != null && value.isEmpty ? 'Enter Jersey No' : null,
                 controller: controllerAge,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Age',
+                  labelText: 'Jersey no',
                   contentPadding: EdgeInsets.only(bottom: 0),
                 ),
               ),
@@ -65,12 +65,11 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                 height: 15,
               ),
               TextFormField(
-                validator: (value) => value != null && value.isEmpty
-                    ? 'Enter date of birth'
-                    : null,
+                validator: (value) =>
+                    value != null && value.isEmpty ? 'Enter Position' : null,
                 controller: controllerDate,
                 decoration: const InputDecoration(
-                    labelText: 'DOB',
+                    labelText: 'position',
                     contentPadding: const EdgeInsets.only(bottom: 0)),
               ),
               const SizedBox(

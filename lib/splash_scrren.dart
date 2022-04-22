@@ -29,12 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Icon(
-              Icons.data_saver_off,
+              Icons.sports_soccer,
               color: Colors.blueAccent,
               size: 60,
             ),
             Text(
-              'FireBase CRUD',
+              'Dream 11',
               style: TextStyle(
                   fontSize: 30,
                   color: Colors.blueAccent,

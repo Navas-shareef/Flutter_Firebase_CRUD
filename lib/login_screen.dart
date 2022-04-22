@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Firebase CRUD',
+                  'Dream 11',
                   style: TextStyle(
                       fontSize: 27,
                       color: Colors.blueAccent,
