@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/MainScreen.dart';
+import 'package:firebase_crud/main.dart';
 import 'package:firebase_crud/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -85,6 +87,17 @@ class LoginScreen extends StatelessWidget {
         mes = 'Successfully login process completed';
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainScreen()));
+        flutterLocalNotificationsPlugin.show(
+            0,
+            'Login Confirmation',
+            'Successfully opened',
+            NotificationDetails(
+                android: AndroidNotificationDetails(channel.id, channel.name,
+                    channelDescription: channel.description,
+                    importance: Importance.high,
+                    playSound: true,
+                    color: Colors.greenAccent,
+                    icon: '@mipmap/ic_launcher')));
       } else {
         mes = 'enter details';
       }

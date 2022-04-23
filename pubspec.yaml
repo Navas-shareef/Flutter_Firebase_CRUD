@@ -38,6 +38,8 @@ dependencies:
   # firebase authentication
   firebase_auth: ^3.3.8
   shared_preferences: ^2.0.13
+  firebase_messaging: ^11.2.7
+  flutter_local_notifications: ^9.4.0
 
 dev_dependencies:
   flutter_test:
