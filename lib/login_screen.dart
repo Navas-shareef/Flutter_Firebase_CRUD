@@ -4,6 +4,7 @@ import 'package:firebase_crud/main.dart';
 import 'package:firebase_crud/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -84,6 +85,12 @@ class LoginScreen extends StatelessWidget {
         UserCredential userdata = await _auth.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         prefs.setString('currentuserid', userdata.user!.uid);
+        // Create storage
+        const storage = FlutterSecureStorage();
+        // Write value
+
+        print(userdata.credential?.token.toString());
+        await storage.write(key: 'Token', value: userdata.user!.uid);
         mes = 'Successfully login process completed';
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainScreen()));

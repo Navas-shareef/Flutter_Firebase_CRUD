@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_screen.dart';
@@ -120,6 +121,10 @@ class SignUpScreen extends StatelessWidget {
           passwordController.text.isNotEmpty) {
         UserCredential userdata = await _auth.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
+        // Create storage
+        const storage = FlutterSecureStorage();
+        // Write value
+        await storage.write(key: 'Token', value: userdata.user!.uid);
         print(userdata.user!.uid);
         prefs.setString('currentuserid', userdata.user!.uid);
         mes = 'success';

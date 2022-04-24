@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as UserAuth;
+import 'package:firebase_crud/signup_screen.dart';
 import 'package:firebase_crud/update_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'models/users_model.dart';
 import 'snackbar.dart';
@@ -39,6 +42,23 @@ class _AllUsersState extends State<AllUsers> {
       appBar: AppBar(
         title: const Text('Users'),
         backgroundColor: Colors.blueAccent,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                final UserAuth.FirebaseAuth _authUser =
+                    UserAuth.FirebaseAuth.instance;
+                // Create storage
+                const storage = FlutterSecureStorage();
+                // Write value
+                _authUser.signOut();
+                await storage.delete(key: 'Token');
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    (route) => false);
+              },
+              icon: Icon(Icons.logout_outlined))
+        ],
       ),
       // body: FutureBuilder<User?>(
       //     future: readUser(),

@@ -39,7 +39,10 @@ dependencies:
   firebase_auth: ^3.3.8
   shared_preferences: ^2.0.13
   firebase_messaging: ^11.2.7
+  # flutter local notification plugin
   flutter_local_notifications: ^9.4.0
+  # for storage
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

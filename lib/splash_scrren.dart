@@ -1,5 +1,7 @@
+import 'package:firebase_crud/MainScreen.dart';
 import 'package:firebase_crud/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,10 +17,30 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  Future<void> checkScreen() async {
+    const storage = FlutterSecureStorage();
+    // Read value
+    final value = await storage.read(key: 'Token');
+
+    print(value);
+    if (value.toString() != 'null') {
+      print(value);
+      setState(() {
+        chooseScreen = const MainScreen();
+      });
+    } else {
+      setState(() {
+        chooseScreen = SignUpScreen();
+      });
+    }
+  }
+
+  Widget chooseScreen = SignUpScreen();
   void _changeScreen() async {
+    await checkScreen();
     await Future.delayed(const Duration(milliseconds: 4000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+        context, MaterialPageRoute(builder: (context) => chooseScreen));
   }
 
   @override
